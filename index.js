@@ -25,23 +25,33 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run(){
   try{
    await client.connect()
-   const AgendaList = client.db("Hiring-Manager").collection("AgendaList");
+   const AddAgendaList = client.db("Hiring-Manager").collection("AddAgendaList");
   
    //AUTH
   
   
   
   
-  app.get('/AgendaList',async(req,res)=>{
+  app.get('/AddAgendaList',async(req,res)=>{
       const query ={}
-      const cursor = AgendaList.find(query)
+      const cursor = AddAgendaList.find(query)
       const result = await cursor.toArray();
       res.send(result)
   })
     
-  
-  
-  
+  app.post("/AddAgendaList", async (req, res) => {
+    const NewAgendaList = req.body; 
+    const result = await AddAgendaList.insertOne(NewAgendaList);
+    res.send(result);
+  });
+
+  // delete 
+  app.delete("/AddAgendaList/:id", async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await AddAgendaList.deleteOne(query);
+    res.send(result);
+  });
     
   }
   finally{
