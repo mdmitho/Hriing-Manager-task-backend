@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion,ObjectId } = require('mongodb');
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config()
@@ -46,7 +46,7 @@ async function run(){
   });
 
   // delete 
-  app.delete("/AddAgendaList/:id", async (req, res) => {
+  app.delete("/agenda/:id", async (req, res) => {
     const id = req.params.id;
     const query = { _id: ObjectId(id) };
     const result = await AddAgendaList.deleteOne(query);
@@ -60,8 +60,8 @@ async function run(){
    
   }
 
-  run().catch(console.dir)
+  run().catch(console.dir);
   
 app.listen(port, () => {
-  console.log("Auto Mobail running hhhh");
+  console.log("hiring manager task");
 });
